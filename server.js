@@ -26,5 +26,3 @@ require("./routes/api-routes.js")(app);
 app.listen(PORT, () => {
   console.log(`Server running on PORT: ${PORT}`);
 });
-
-// mongodb+srv://workout-app-admin:JkdxvvE7yzXz5lrf@cluster0.xvq6e.mongodb.net/workout?retryWrites=true&w=majority
