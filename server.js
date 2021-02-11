@@ -14,6 +14,8 @@ app.use(express.static("public"));
 // setup connection to mongoose db
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
   useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
   useFindAndModify: false
 });
 
@@ -24,3 +26,5 @@ require("./routes/api-routes.js")(app);
 app.listen(PORT, () => {
   console.log(`Server running on PORT: ${PORT}`);
 });
+
+// mongodb+srv://workout-app-admin:JkdxvvE7yzXz5lrf@cluster0.xvq6e.mongodb.net/workout?retryWrites=true&w=majority
