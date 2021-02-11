@@ -8,15 +8,7 @@ module.exports = function (app) {
       .catch(err => res.json(err));
   });
   
-  app.put('/api/workouts/:id', (req, res) => {
-    db.findOneAndUpdate(
-      { _id: req.body.id },
-      { exercises: req.body.exercises },
-      { new: true}
-    );
-  });
-  
-  app.get('/api/workout?', (req, res) => {
+  app.get('/api/workouts?', (req, res) => {
     db.findOne({_id: req.query.id})
       .then(data =>
       res.json(data))
@@ -24,13 +16,27 @@ module.exports = function (app) {
   });
   
   app.get('/api/workouts/range', (req, res) => {
-    res.end("test")
+    db.find({})
+      .then(data => res.json(data))
+      .catch(err => res.json(err));
   });
   
-  // working
   app.post('/api/workouts', (req, res) => {
     db.create(req.body)
       .then(data => res.json(data))
       .catch(err => res.json(err));
+  });
+
+  app.put('/api/workouts/:id', (req, res) => {
+    // checks for body.name so it won't add a blank exercise
+    if (req.body.name) {
+      db.updateOne(
+        { _id: req.params.id },
+        { $push: { exercises: req.body } })
+        .then(data => res.json(data))
+        .catch(err => res.json(err));
+    } else {
+      res.json("No body sent.")
+    }
   });
 }
